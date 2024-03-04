@@ -111,26 +111,41 @@ which will override ``multiplayer`` for the node at that path and all of its des
 This allows sibling nodes to be configured with different peers, which makes it possible to run a server
 and a client simultaneously in one instance of Godot.
 
-::
+.. tabs::
+    ..code-tab:: gdscript GDScript
 
     # By default, these expressions are interchangeable.
     multiplayer # Get the MultiplayerAPI object configured for this node.
     get_tree().get_multiplayer() # Get the default MultiplayerAPI object.
+    ..code-tab:: csharp
+        // By default, these expressions are interchangeable.
+    Multiplayer // Get the MultiplayerAPI object configured for this node.
+    GetTree().GetMultiplayer() # Get the default MultiplayerAPI object.
 
 To initialize networking, a ``MultiplayerPeer`` object must be created, initialized as a server or client,
 and passed to the ``MultiplayerAPI``.
 
-::
+.. tabs::
+    ..code-tab:: gdscript GDScript
+        # Create client.
+        var peer = ENetMultiplayerPeer.new()
+        peer.create_client(IP_ADDRESS, PORT)
+        multiplayer.multiplayer_peer = peer
 
-    # Create client.
-    var peer = ENetMultiplayerPeer.new()
-    peer.create_client(IP_ADDRESS, PORT)
-    multiplayer.multiplayer_peer = peer
+        # Create server.
+        var peer = ENetMultiplayerPeer.new()
+        peer.create_server(PORT, MAX_CLIENTS)
+        multiplayer.multiplayer_peer = peer
+    ..code-tab:: csharp
+        // Create client
+        var peer=new ENetMultiplayerPeer();
+        peer.CreateClient(IP_ADDRESS, PORT);
+        Multiplayer.MultiplayerPeer= peer;
+        // Create server
+        var peer=new ENetMultiplayerPeer();
+        peer.CreateServer(PORT,MAX_CLIENTS);
+        Multiplayer.MultiplayerPeer = peer;
 
-    # Create server.
-    var peer = ENetMultiplayerPeer.new()
-    peer.create_server(PORT, MAX_CLIENTS)
-    multiplayer.multiplayer_peer = peer
 
 To terminate networking:
 
